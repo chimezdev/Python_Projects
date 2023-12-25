@@ -6,8 +6,6 @@ for i in database.keys():
     if username == i and password == database.get(i):
         print("Verified")
         break
-    else:
-        continue
 if password != database.get(i):
     print("Wrong username or password")
     # if username == i:
@@ -16,3 +14,4 @@ if password != database.get(i):
     #     break
 
 #print("Verified")
+
