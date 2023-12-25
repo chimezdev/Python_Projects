@@ -84,3 +84,35 @@
 # print(bigword, bigcount)
 
 
+# WORKING WITH DICTIONARY
+fname = input('Enter File: ')
+if len(fname) < 1:
+    fname = 'clown.txt'
+hand = open(fname)
+
+di = dict()
+for lin in hand:
+    lin = lin.rstrip()
+    wds = lin.split()
+    for w in wds:
+        # if w in di:
+        #     di[w] = di[w] + 1
+        # else:
+        #     di[w] = 1
+        #     print('**NEW**')
+        # print(w, di[w])
+        
+        # using the power of dict
+        di[w] = di.get(w, 0) + 1   # idiom: retrieve/create/update counter
+        
+print(di)
+
+#Finding the most common word
+most_word = None
+most_value = None
+for key, val in di.items():
+    if most_word is None or val > most_value:
+        most_word = key
+        most_value = val
+
+print(most_word, most_value)
