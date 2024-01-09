@@ -55,7 +55,7 @@
 # # Retrieving lists of keys and values
 # data = {'chuck' : 1, 'fred' : 42, 'jan': 1000}
 # print(list(data)) # returns ['jan', 'chuck', 'fred']
-# print(data.keys()) # returns ['jan'm 'chuck', 'fred']
+# print(data.keys()) # returns ['jan' 'chuck', 'fred']
 # print(data.values()) #returns [100, 1, 42]
 # print(data.items()) # returns [('jan', 100), ('chuck', 1), ('fred', 42)]
 
@@ -84,35 +84,59 @@
 # print(bigword, bigcount)
 
 
-# WORKING WITH DICTIONARY
-fname = input('Enter File: ')
-if len(fname) < 1:
-    fname = 'clown.txt'
-hand = open(fname)
+# # WORKING WITH DICTIONARY
+# fname = input('Enter File: ')
+# if len(fname) < 1:
+#     fname = 'clown.txt'
+# hand = open(fname)
 
-di = dict()
-for lin in hand:
-    lin = lin.rstrip()
-    wds = lin.split()
-    for w in wds:
-        # if w in di:
-        #     di[w] = di[w] + 1
-        # else:
-        #     di[w] = 1
-        #     print('**NEW**')
-        # print(w, di[w])
+# di = dict()
+# for lin in hand:
+#     lin = lin.rstrip()
+#     wds = lin.split()
+#     for w in wds:
+#         # if w in di:
+#         #     di[w] = di[w] + 1
+#         # else:
+#         #     di[w] = 1
+#         #     print('**NEW**')
+#         # print(w, di[w])
         
-        # using the power of dict
-        di[w] = di.get(w, 0) + 1   # idiom: retrieve/create/update counter
+#         # using the power of dict
+#         di[w] = di.get(w, 0) + 1   # idiom for making a histogram: retrieve/create/update counter
         
-print(di)
+# print(di)
 
-#Finding the most common word
-most_word = None
-most_value = None
-for key, val in di.items():
-    if most_word is None or val > most_value:
-        most_word = key
-        most_value = val
+# #Finding the most common word
+# most_word = None
+# most_value = None
+# for key, val in di.items():
+#     if most_word is None or val > most_value:
+#         most_word = key
+#         most_value = val
 
-print(most_word, most_value)
+# print(most_word, most_value)
+
+
+
+fhand = open('youtube/intro.txt')
+counts = dict()
+for line in fhand:
+    words = line.split()
+    for word in words:
+        counts[word] = counts.get(word, 0) + 1
+
+lst = list()
+for key, val in counts.items():
+    newtup = (val, key)
+    lst.append(newtup)
+    
+lst = sorted(lst, reverse=True)
+
+for val, key in lst[:10]:
+    print(key, val)
+    
+    
+# SHORTER VERSION
+c = {'a':10, 'b':1, 'c':22}
+print(sorted([(v,k) for k,v in c.items()]))
