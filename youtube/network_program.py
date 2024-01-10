@@ -36,4 +36,20 @@ print (counts)
 # search engines scrape web pages - this is called 'spidering the web' or 'web crawling'
 # Using BeautifulSoup
 
+from bs4 import BeautifulSoup 
+import ssl
 
+# Ignore SSL certificate errors
+ctx = ssl.create_default_context()
+ctx = check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
+# necessary when u have a site with cert that is not in python's list of certs
+
+url = input('Enter url: ')
+html = urllib.request.urlopen(url, context=ctx).read() #oprns the url and reads the content
+soup = BeautifulSoup(html, 'html.parser') # the html content is parsed and the 'BeautifulSoup' class returns object
+
+# Retrieve all of the anchor tags
+tags = soup('a') #you can do a whole lot like retrieving all anchor tags
+for tag in tags:
+    print(tag.get('href', None))
