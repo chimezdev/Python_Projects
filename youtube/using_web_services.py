@@ -43,4 +43,45 @@ for item in lst:
     print('Attribute', item.get('x'))
 
 
-# XML Schema
+# Other serialization format: JavaScript Object Notation, JSON
+# Processing json with python
+
+import json
+data = '''
+    {
+        "name": "Stone",
+        "phone": {
+            "type": "intl",
+            "number" : "+1 734 303 4456"
+        },
+        "email" : {
+            "hide" : "yes"
+        }
+    }
+'''
+info =json.loads(data)
+print('Name:', info["name"])
+print('Hide:', info["email"]["hide"])
+
+
+#example 2
+input = '''
+    [
+        {
+            "id": "001",
+            "x": "2",
+            "name": "Chuck"
+        },
+        {
+           "id": "002",
+            "x": "4",
+            "name": "Stone" 
+        }
+    ]
+'''
+data = json.loads(input)
+print('User count:', len(data))
+for item in data:
+    print('Name', item['name'])
+    print('Id', item['id'])
+    print('Attribute', item['x'])
