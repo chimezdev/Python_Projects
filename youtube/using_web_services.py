@@ -127,11 +127,11 @@ serviceurl = 'http://maps.googleapis.com/maps/api/geocode/json?' #this api retur
 while True:
     address = input('Enter your location: ')
     if len(address) < 1: break
-    url = serviceurl + urllib.parse.urlencode({'address': address}) #the library parses the text we read from user
+    url = serviceurl + urllib.parse.urlencode({'address': address}) #the library parses the addr text or this format 'address=Ann+Arbor...' that is appended to the url
     
     print('Retrieving', url)
     uh = urllib.request.urlopen(url)
-    data = uh.read().decode() #data is now a string 
+    data = uh.read().decode() # we decode it bcos its utf-8 to get our 'data' as string 
     print('Retrieved', len(data), 'characters')
     
     try: 
@@ -142,12 +142,10 @@ while True:
         print('==== Failure To Retrieve ====')
         print(data)
         continue
+    
+    print(json.dumps(js, indent=4)) #json.dump is opposit of json.loads
     lat = js['results'][0]['geometry']['location']['lat']
     lng = js['results'][0]['geometry']['location']['lng']
     print('lat', lat, 'lng', lng)
     location = js['results'][0]['formatted_address']
     print(location)
-
-
-
-# API Security and Rate Limiting
