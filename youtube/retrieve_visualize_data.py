@@ -15,9 +15,12 @@ api_key = False
 # api_key = 'AIzaSy__IDByI84'
 
 if api_key is False:
+    #api_key = 42
     serviceurl = "http://py4e-data.dr-chuck.net/geojson?"
+    #serviceurl = "http://py4e-data.dr-chuck.net/json?"
 else:
     serviceurl = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
+    #serviceurl = "https://maps.googleapis.com/maps/api/geocode/json?"
     
 # Additional detail for urllib
 # http.client.HTTPConnection.debuglevel = 1
@@ -48,11 +51,11 @@ for line in fh:
         data = cur.fetchone()[0]
         print("Found in database ", address)
         continue
-    except:
+    except Exception as err:
         pass
     
     parms = dict()
-    parms["query"] = address
+    parms["address"] = address
     if api_key is not False: parms['key'] = api_key
     url = serviceurl + urllib.parse.urlencode(parms)
     
@@ -60,11 +63,10 @@ for line in fh:
     uh = urllib.request.urlopen(url, context=ctx)
     data = uh.read().decode()
     print('Retrieved', len(data), 'characters', data[:20].replace('\n', ' '))
-    
     count = count + 1
     
     try: 
-        js = json.load(data)
+        js = json.loads(data)
     except:
         print(data) # we print in case unicode causes an error
         continue
@@ -75,11 +77,11 @@ for line in fh:
         break
     
     cur.execute('''INSERT INTO Locations (address, geodata) VALUES (?, ?)''', (memoryview(address.encode()), memoryview(data.encode())))
-    cur.commit()
+    conn.commit()
     if count % 10 == 0:
         print('Pausing for a bit...')
         time.sleep(5)
         
-print("Run geodump.py to read the data from the database so you can visualize it")
+print("Run geodump.py to read the data from the database so you can visualize it on a map.")
 
     
