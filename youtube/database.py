@@ -277,7 +277,12 @@ while True:
             
     url = twurl.augment(TWITTER_URL, {'screen_name': acct, 'count': '100'})
     print('Retrieving account', acct)
-    connection = urllib.request.urlopen(url, context=ctx)
+    try:
+        connection = urllib.request.urlopen(url, context=ctx)
+    except Exception as err:
+        print('Failed to Retrieve', err)
+        break
+    
     data = connection.read().decode()
     headers = dict(connection.getheaders())
     
