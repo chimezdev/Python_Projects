@@ -53,14 +53,14 @@ while True:
         many = int(sval)
     many = many - 1
     
-    cur.execute('SELECT id, url FROM Pages WHERE html is NULL and errors is NULL ORDER BY RANDOM() LIMIT 1')
+    cur.execute('SELECT id, url FROM Pages WHERE html is NULL and error is NULL ORDER BY RANDOM() LIMIT 1')
     try: 
         row = cur.fetchone()
         #print row
         fromid = row[0]
         url = row[1]
     except:
-        prnt('No unretrieved HTML pages found')
+        print('No unretrieved HTML pages found')
         many = 0
         break
     
@@ -93,3 +93,51 @@ while True:
         cur.execute('UPDATE Pages SET error=-1 WHERE url=?', (url, ) )
         conn.commit()
         continue
+    
+    cur.execute('INSERT OR IGNORE INTO Pages (url, html, new_rank) VALUES (?, NULL, 1.0 )', ( url, ) )
+    cur.execute('UPDATE Pages SET html=? WHERE url=?', (memoryview(html), url ) )
+    conn.commit()
+    
+    # Retrieve all of the anchor tags
+    tags = soup('a')
+    count = 0
+    for tag in tags:
+        href = tag.get('href', None)
+        if(href is None): continue
+        # Resolve relative references like href="/contact"
+        up = urlparse(href)
+        if (len(up.scheme) < 1 ):
+            href = urljoin(url, href)
+        ipos = href.find('#')
+        if(ipos > 1): href = href[:ipos]
+        if(href.endswith('.png') or href.endswith('.jpg') or href.endswith('.gif')): continue
+        if(href.endswith(' ')) : href = href[:-1]
+        # print (href)
+        if(len(href) < 1 ) : continue
+        
+        # Check if the URL is in any of the webs
+        found = False
+        for web in webs:
+            if (href.startswith(web)):
+                found = True
+                break
+        if not found: continue
+        
+        cur.execute('INSERT OR IGNORE INTO Pages (url, html, new_rank) VALUES (?, NULL, 1.0)', (href, ) )
+        count = count + 1
+        conn.commit()
+        
+        cur.execute('SELECT id FROM Pages WHERE url=? LIMIT 1', (href, ))
+        try:
+            row = cur.fetchone()
+            toid = row[0]
+        except:
+            print('Could not retrieve id')
+            continue
+        # print fromid, toid
+        cur.execute('INSERT OR IGNORE INTO Links (from_id, to_id) VALUES (?, ?)', (fromid, toid ))
+        
+    print(count)
+    
+cur.close()
+            
