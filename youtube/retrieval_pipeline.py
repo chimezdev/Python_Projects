@@ -70,3 +70,78 @@ cur.execute('''CREATE TABLE IF NOT EXISTS Messages(id INTEGER UNIQUE, email TEXT
             subject TEXT, headers TEXT, body TEXT)''')
 
 # Pick up where we left off
+start = None
+cur.execute('SELECT max(id) FROM Messages')
+try:
+    row = cur.fetchone()
+    if row is None:
+        start = 0
+    else:
+        start = row[0]
+except:
+    start = 0 
+
+if start is None: start = 0
+
+many = 0 
+count = 0
+fail = 0
+while True:
+    if(many<1):
+        sval = input('How many messages:')
+        if(len(sval) < 1): break
+        many = int(sval)
+
+    start = start + 1
+    cur.execute('SELECT id FROM Messages WHERE id=?', (start,))
+    try:
+        row = cur.fetchone()
+        if row is not None : continue
+    except:
+        row = None
+        
+    many = many-1
+    url = baseurl + str(start) + '/' + str(start + 1)
+
+    text = "None"
+    try:
+        # Open with a timeout of 30 seconds
+        document = urllib.request.urlopen(url, None, 30, context=ctx)
+        text = document.read().decode()
+        if document.getcode() != 200:
+            print("Error code=",document.getcode(), url)
+            break
+    except KeyboardInterrupt:
+        print('')
+        print('Program interrupted by user...')
+        break
+    except Exception as e:
+        print('Unable to retrieve or parse page', url)
+        print('Error', e)
+        fail = fail + 1
+        if fail > 5: break
+        continue
+
+    print(url, len(text))
+    count = count + 1
+
+    if not text.startswith("From "):
+        print(text)
+        print("Did not find From ")
+        fail = fail + 1
+        if fail > 5: break
+        continue
+
+    pos = text.find("\n\n")
+    if pos > 0 :
+        hdr = text[:pos]
+        body = text[pos+2:]
+    else:
+        print(text)
+        print("Could not find break between headers and body")
+        fail = fail + 1
+        if fail > 5: break
+        continue
+
+    email = None
+    
