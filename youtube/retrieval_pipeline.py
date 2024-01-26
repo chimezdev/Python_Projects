@@ -144,4 +144,5 @@ while True:
         continue
 
     email = None
-    
+    x = re.findall('\nFrom: .* <(\S+@\S+)>\N')
+
