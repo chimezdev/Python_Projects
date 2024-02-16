@@ -49,8 +49,6 @@ def draw_move(board):
         if not found:
             continue
         else: break
-draw_move(board)
-display_board(board)
 
 def make_list_of_free_fields(board):
     # The function browses the board and builds a list of all the free squares; 
@@ -60,6 +58,7 @@ def make_list_of_free_fields(board):
         for j, col in enumerate(row):
             if board[i][j] in range(10):
                 empty_sq.append((i, j))
+    return empty_sq
 
 def victory_for(board, sign):
     # The function analyzes the board's status in order to check if 
@@ -92,23 +91,28 @@ def victory_for(board, sign):
 
 print("I play first")
 board[1][1] = "X"
-display_board(board)
 
-enter_move(board)
-display_board(board)
+free = make_list_of_free_fields(board)
+human_turn = True
 
-make_list_of_free_fields(board)
-
-
-
-    # for i in range(3):
-    #     for j in range(3):
-    #         if board[i][j] == board[0][0] == board[0][1] == board[0][2] == "X" or \
-    #         board[i][j] == board[1][0] == board[1][1] == board[1][2] == "X" or \
-    #         board[i][j] == board[2][0] == board[2][1] == board[2][2] == "X" or \
-    #         board[i][j] == board[0][0] == board[1][0] == board[2][0] == "X" or \
-    #         board[i][j] == board[0][1] == board[1][1] == board[2][1] == "X" or \
-    #         board[i][j] == board[0][2] == board[1][2] == board[2][2] == "X" or \
-    #         board[i][j] == board[0][0] == board[1][1] == board[2][2] == "X" or \
-    #         board[i][j] == board[0][2] == board[1][1] == board[2][0] == "X":
-    #             print("I won!")
+while len(free):
+    display_board(board)
+    if human_turn:
+        enter_move(board)
+        victor = victory_for(board, 'O')
+        if victor == 'you':
+            print('CONGRATULATIONS! YOU WON')
+            break
+        display_board(board)
+    else:
+        draw_move(board)
+        victor = victory_for(board, 'X')
+        if victor == 'me':
+            print('I WON!')
+            break
+        display_board(board)
+    if victor == None and len(free) <= 2:
+        print('DRAW!')
+        break
+    human_turn = not human_turn
+    free = make_list_of_free_fields(board)
