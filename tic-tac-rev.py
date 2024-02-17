@@ -17,7 +17,6 @@ def display_board(board):
 print("WELCOME!")
 display_board(board)
 
-# comp = randrange(1, 9)
 def enter_move(board):
     while True:
         try:
@@ -45,7 +44,6 @@ def draw_move(board):
                     board[i][j] = 'X'
                     found = True
                     break
-      # print('me', comp)
         if not found:
             continue
         else: break
@@ -91,26 +89,28 @@ def victory_for(board, sign):
 
 print("I play first")
 board[1][1] = "X"
+display_board(board)
 
 free = make_list_of_free_fields(board)
 human_turn = True
 
 while len(free):
-    display_board(board)
     if human_turn:
         enter_move(board)
         victor = victory_for(board, 'O')
+        display_board(board)
         if victor == 'you':
             print('CONGRATULATIONS! YOU WON')
             break
-        display_board(board)
+
     else:
         draw_move(board)
         victor = victory_for(board, 'X')
+        display_board(board)
         if victor == 'me':
             print('I WON!')
             break
-        display_board(board)
+        
     if victor == None and len(free) <= 2:
         print('DRAW!')
         break
