@@ -27,6 +27,8 @@ my_floats = [4.35, 6.09, 3.25, 9.77, 2.16, 8.88, 4.59]
         
 result = list(map(round, [x**2 for x in my_floats], [3] * len(my_floats)))
 print(result)
+# OR
+# map_result = list(map(lambda x: round(x ** 2, 3), my_floats))
 
 # Use filter to print only the names that are less than 
 # or equal to seven letters
