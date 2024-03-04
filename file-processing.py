@@ -76,36 +76,61 @@ import sys
 
 
 
-# COPYING FILE
+# # COPYING FILE
+# from os import strerror
+
+# srcname = input("Enter the source file: ")
+# try:
+#     src = open(srcname, 'rb')
+# except IOError as e:
+#     print("Cannot open the source file: ", strerror(e.errno))
+#     exit(e.errno)
+
+# dstname = input("Enter the destination file name: ")
+# try:
+#     dst = open(dstname, 'wb')
+# except Exception as e:
+#     print("Cannot create the destination file: ", strerror(e.errno))
+#     src.close()
+#     exit(e.errno)
+
+# buffer = bytearray(65536)
+# total = 0
+# try:
+#     readin = src.readinto(buffer)
+#     while readin > 0:
+#         written = dst.write(buffer[:readin])
+#         total += written
+#         readin = src.readinto(buffer)
+# except IOError as e:
+#     print("Cannot create the destination file: ", strerror(e.errno))
+#     exit(e.errno)
+
+# print(total,'byte(s) succesfully written')
+# src.close()
+# dst.close()
+
+
+# Character Histogram!
+# Histogram of latin alphabets
 from os import strerror
+from collections import Counter
 
-srcname = input("Enter the source file: ")
+file = input("Enter file name: ")
 try:
-    src = open(srcname, 'rb')
+    file_read = open(file, 'rt')
+    text = file_read.readline()
+    line_text = ""
+    while text != '':
+        for char in text:
+            if char.isalpha():
+                line_text += char
+        text = file_read.readline()
+    histogram = Counter(line_text.lower())
+    histogram = sorted(histogram.items())
+    for key, value in histogram:
+        print(f"{key} --> {value}")
 except IOError as e:
-    print("Cannot open the source file: ", strerror(e.errno))
-    exit(e.errno)
+    print("Cannot open source file: ", strerror(e.errno))
+    file_read.close()
 
-dstname = input("Enter the destination file name: ")
-try:
-    dst = open(dstname, 'wb')
-except Exception as e:
-    print("Cannot create the destination file: ", strerror(e.errno))
-    src.close()
-    exit(e.errno)
-
-buffer = bytearray(65536)
-total = 0
-try:
-    readin = src.readinto(buffer)
-    while readin > 0:
-        written = dst.write(buffer[:readin])
-        total += written
-        readin = src.readinto(buffer)
-except IOError as e:
-    print("Cannot create the destination file: ", strerror(e.errno))
-    exit(e.errno)
-
-print(total,'byte(s) succesfully written')
-src.close()
-dst.close()
