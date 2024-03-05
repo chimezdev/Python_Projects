@@ -126,10 +126,13 @@ try:
             if char.isalpha():
                 line_text += char
         text = file_read.readline()
-    histogram = Counter(line_text.lower())
-    histogram = sorted(histogram.items())
+    histogram = Counter(line_text.lower()).most_common() # sorts by the most frequent
+    #histogram = sorted(histogram.items())          #sorts the keys alphabetically
+    write_file = input('Enter destination file: ')
+    dfile = open(write_file, 'wt')
     for key, value in histogram:
         print(f"{key} --> {value}")
+        dfile.write(f"{key} --> {value}\n")
 except IOError as e:
     print("Cannot open source file: ", strerror(e.errno))
     file_read.close()
