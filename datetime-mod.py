@@ -70,10 +70,15 @@
 # SUDOKU GAME
 
 board = [[0 for i in range(9)] for j in range(9)]
-    
+
+def verify(val):
+    if val:
+        return "Yes"
+    else: 
+        return "No"
 
 for row in range(9):
-    user_input = input("Enter row of the sudoku (9 consecutive digits btw 1-9): ")
+    user_input = input("Enter the sudoku row values (9 consecutive digits btw 1-9): ")
     if len(user_input) != 9:
         print("Enter exactly 9 digits for the row: ")
         continue
@@ -92,9 +97,14 @@ for row in board:
         valid = False 
         break   
 
-if valid:
-    print("Yes")
-else: 
-    print("No")
+print(verify(valid))
 
+is_col_valid = True
+for col in range(9):
+    if not (all(1 <= elem <= 9 for elem in [board[i][col] for i in range(9)]) \
+            and len(set(board[i][col] for i in range(9))) == 9):
+        is_col_valid = False
+        break
+
+print(verify(is_col_valid))
 print(board)
