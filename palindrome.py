@@ -19,7 +19,6 @@ numbers= [3, 4, 6, 9, 34, 12]
 result = reduce(lambda x, y: x + y, numbers, 10)
 print(result)
 
-from functools import reduce 
 
 # Use map to print the square of each numbers rounded
 # to three decimal places

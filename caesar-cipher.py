@@ -28,3 +28,34 @@ for char in text:
         cipher += chr(code)
         
 print(cipher)
+
+# # Caesar Cipher encoding
+
+# text = input("Enter text to encode: ")
+# try: 
+#     shift = int(input("Enter an encoding value: "))
+#     while shift not in range(1, 26):
+#         shift = input("Enter encoding value in range 1-25: ")
+# except Exception as e:
+#     print("An integer value is expected")
+#     shift = int(input("Enter an encoding value: "))
+
+# encode = ""
+# for cha in text:
+#     if not cha.isalpha():
+#         encode += cha
+#     else:
+#         cha_n = ord(cha) + shift
+#         if cha.islower():
+#             cha_n = ord(cha) + shift
+#             while cha_n not in range(ord('a'), ord('z') + 1):
+#                 cha_n = (cha_n - ord('z') - 1) + ord('a')
+#             code = chr(cha_n)
+#             encode += code
+#         if cha.isupper():
+#             cha_n = ord(cha) + shift
+#             while cha_n not in range(ord('A'), ord('Z')):
+#                 cha_n = (cha_n - ord('Z') - 1) + ord('A')
+#             code = chr(cha_n)
+#             encode += code
+# print(encode)

@@ -133,6 +133,7 @@ try:
     for key, value in histogram:
         print(f"{key} --> {value}")
         dfile.write(f"{key} --> {value}\n")
+    dfile.close()
 except IOError as e:
     print("Cannot open source file: ", strerror(e.errno))
     file_read.close()

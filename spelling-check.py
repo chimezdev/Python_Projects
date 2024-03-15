@@ -11,7 +11,7 @@
 #     correct_word = corrector.correction(word)
 #     print("Correct spelling is ", correct_word)
 
-
+## The find method
 # the_text = """A variation of the ordinary lorem ipsum
 # text has been used in typesetting since the 1960s 
 # or earlier, when it was popularized by advertisements 
@@ -50,7 +50,9 @@
 # print(mysplit("   "))
 # print(mysplit(" abc "))
 # print(mysplit(""))
-    
+
+
+## A LED Display
 # digits = [ '1111110',  	# 0
 # 	   '0110000',	# 1
 # 	   '1101101',	# 2
