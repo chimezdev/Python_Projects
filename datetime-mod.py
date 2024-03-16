@@ -70,6 +70,7 @@
 # SUDOKU GAME
 
 board = [[0 for i in range(9)] for j in range(9)]
+# print(board)
 
 def verify(val):
     if val:
@@ -78,7 +79,7 @@ def verify(val):
         return "No"
 
 for row in range(9):
-    user_input = input("Enter the sudoku row values (9 consecutive digits btw 1-9): ")
+    user_input = input("Enter row #%d (9 consecutive digits btw 1-9): " %(row + 1))
     if len(user_input) != 9:
         print("Enter exactly 9 digits for the row: ")
         continue
@@ -91,6 +92,7 @@ for row in range(9):
     row_values = [int(digit) for digit in user_input]
     board[row] = row_values
 
+# Verify all rows are good
 valid = True
 for row in board:
     if not (all(elem in range(1, 10) for elem in row) and len(set(row)) == len(row)):
@@ -99,12 +101,25 @@ for row in board:
 
 print(verify(valid))
 
-is_col_valid = True
-for col in range(9):
-    if not (all(1 <= elem <= 9 for elem in [board[i][col] for i in range(9)]) \
-            and len(set(board[i][col] for i in range(9))) == 9):
-        is_col_valid = False
-        break
+# Verify all columns
+if verify(valid) == "Yes":
+    is_col_valid = True
+    for col in range(9):
+        if not (all(1 <= elem <= 9 for elem in [board[i][col] for i in range(9)]) \
+                and len(set(board[i][col] for i in range(9))) == 9):
+            is_col_valid = False
+            break
 
 print(verify(is_col_valid))
-print(board)
+
+# Verify all sub-squares(3x3)
+if verify(is_col_valid) == "Yes":
+    sub_sqr = []
+    for r in range(0, 9, 3):
+        for c in range(0, 9, 3):
+            # make a string containing all digits from a sub-square
+            for i in range(3):
+                sub_sqr.append(board[r+i][c:c+3])
+
+# print(sub_sqr)
+                
