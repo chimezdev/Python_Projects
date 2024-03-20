@@ -117,3 +117,48 @@
 # print("Possible" if is_possible(containers) else "Impossible")
 
 
+# #ENCRYPTION
+# from math import sqrt, floor, ceil
+# def encryption(s):
+#     # Write your code here
+#     s = s.replace(' ', '')
+#     length = len(s)
+#     rows = floor(sqrt(length))
+#     columns = ceil(sqrt(length))
+    
+#     while rows * columns < length:
+#         rows += 1
+    
+#     grid = []
+#     for i in range(rows):
+#         row = s[i * columns : (i + 1) * columns]
+#         grid.append(row)
+#     # print(grid)
+    
+#     encoded = " ".join("".join(grid[j][i] for j in range(rows) if i < len(grid[j])) for i in range(columns))
+#     # # This whole line is equal to this:
+#     # rows = len(grid)
+#     # columns = max(len(row) for row in grid)  # Find the length of the longest row
+
+#     # encoded_message = ""
+
+#     # # Loop through each column and build the message
+#     # for col in range(columns):
+#     #     column_message = ""
+#     #     for row in range(rows):
+#     #         if col < len(grid[row]):
+#     #             cell_value = grid[row][col]
+#     #             if cell_value is not None:  # Ignore empty cells
+#     #                 column_message += cell_value
+#     #     encoded_message += column_message + " "
+
+#     # # Remove extra space at the end
+#     # encoded_message = encoded_message.strip()
+
+
+#     return encoded
+
+# string = "I am going to be very successful starting from this year"
+# print(encryption(string))
+
+
