@@ -161,4 +161,26 @@
 # string = "I am going to be very successful starting from this year"
 # print(encryption(string))
 
+# PRACTICE
+grid = [  # This is a sample grid, replace it with your actual grid data
+    ["1", "Aa", "Bb"],
+    ["2", "3", None],  
+    ["14", None, "Cc"]
+]
 
+rows = len(grid)
+columns = max(len(row) for row in grid)
+
+# encode by join elems of each row
+row_elem = ""
+each_row = ""
+for row_line in grid:
+    for char in row_line:
+       if char != None:
+          row_elem += char
+        
+    each_row += row_elem + " "
+    row_elem = ""
+each_row = each_row.rstrip()
+
+print(each_row)
