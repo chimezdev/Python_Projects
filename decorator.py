@@ -43,23 +43,77 @@
 
 
 
-# In how long a function runs
-import time
-def my_timer(orig_func):
-    import time
+# # In how long a function runs
+# import time
+# def my_timer(orig_func):
+#     import time
 
-    def wrapper(*args, **kwargs):
-        t1 = time.time()
-        result = orig_func(*args, **kwargs)
-        t2 = time.time() - t1
-        print('{} ran in: {} sec'.format(orig_func.__name__, t2))
-        return result
+#     def wrapper(*args, **kwargs):
+#         t1 = time.time()
+#         result = orig_func(*args, **kwargs)
+#         t2 = time.time() - t1
+#         print('{} ran in: {} sec'.format(orig_func.__name__, t2))
+#         return result
     
-    return wrapper
+#     return wrapper
 
-@my_timer
-def display_info(name, age):
-    time.sleep(1)
-    print('display_info ran with arguments ({}, {})'.format(name, age))
+# @my_timer
+# def display_info(name, age):
+#     time.sleep(1)
+#     print('display_info ran with arguments ({}, {})'.format(name, age))
 
-display_info("Stone", 30)
+# display_info("Stone", 30)
+
+
+# def func(ops) -> int:
+
+#     value = []
+#     for rec in ops:
+#         try:
+#             val = int(rec)
+#             value.append(val)
+#         except:
+#             if rec == "C":
+#                 if value:
+#                     value.pop()
+#             elif rec == "D":
+#                 if value:
+#                     val = 2 * value[-1]
+#                     value.append(val)
+#             else:
+#                 if len(value) >= 2:
+#                     val = value[-1] + value[-2]
+#                     value.append(val)
+
+#     result = sum(value)
+
+#     return result
+
+# print(func(["5", "2", "C", "D", "+"]))
+
+
+# def organizingContainers(container):
+#     # Calculate the total number of balls of each type
+#     ball_counts = [sum(container[i][j] for i in range(len(container))) for j in range(len(container[0]))]
+#     container_sizes = sorted([sum(row) for row in container])
+
+#     print("ball", ball_counts)
+#     print(container_sizes)
+
+# containers = [[1, 1],[2, 2],[3, 3]]
+# organizingContainers(containers)
+
+# # OR
+
+# def is_possible(containers):
+#     ball_types = set()
+#     for container in containers:
+#         for ball in container:
+#             ball_types.add(ball)
+#     return len(ball_types) <= len(containers)
+
+# # Example usage:
+# containers = [[1, 4], [2, 3]]
+# print("Possible" if is_possible(containers) else "Impossible")
+
+
