@@ -161,26 +161,108 @@
 # string = "I am going to be very successful starting from this year"
 # print(encryption(string))
 
-# PRACTICE
-grid = [  # This is a sample grid, replace it with your actual grid data
-    ["1", "Aa", "Bb"],
-    ["2", "3", None],  
-    ["14", None, "Cc"]
-]
+# # PRACTICE
+# grid = [  # This is a sample grid, replace it with your actual grid data
+#     ["1", "Aa", "Bb"],
+#     ["2", "3", None],  
+#     ["14", None, "Cc"]
+# ]
 
-rows = len(grid)
-columns = max(len(row) for row in grid)
+# rows = len(grid)
+# columns = max(len(row) for row in grid)
 
-# encode by join elems of each row
-row_elem = ""
-each_row = ""
-for row_line in grid:
-    for char in row_line:
-       if char != None:
-          row_elem += char
+# # encode by join elems of each row
+# row_elem = ""
+# each_row = ""
+# for row_line in grid:
+#     for char in row_line:
+#        if char != None:
+#           row_elem += char
         
-    each_row += row_elem + " "
-    row_elem = ""
-each_row = each_row.rstrip()
+#     each_row += row_elem + " "
+#     row_elem = ""
+# each_row = each_row.rstrip()
 
-print(each_row)
+# print(each_row)
+
+
+#Time in Words
+from num2words import num2words #run 'pip install num2words'
+
+def timeInWords(h, m):
+    # Write your code here
+    hour = num2words(h)
+    if m == 00:
+        minutes = " o' clock"
+        return hour + minutes
+    elif 1 <= m <= 30:
+        minutes = "past "
+        if m == 15:
+            return "quarter " + minutes + hour
+        elif m == 30:
+            return "half " + minutes + hour
+        else:
+            return num2words(m) + " " + minutes + hour
+    else:
+        minutes = "to"
+        return num2words(60 - m) + " " + minutes + hour
+
+
+# OR 
+def timeInWords(h, m):
+    # Write your code here
+    numbers_to_word = {
+      1: "one",
+      2: "two",
+      3: "three",
+      4: "four",
+      5: "five",
+      6: "six",
+      7: "seven",
+      8: "eight",
+      9: "nine",
+      10: "ten",
+      11: "eleven",
+      12: "twelve",
+      13: "thirteen",
+      14: "fourteen",
+      15: "quarter",
+      16: "sixteen",
+      17: "seventeen",
+      18: "eighteen",
+      19: "nineteen",
+      20: "twenty",
+      21: "twenty one",
+        22: "twenty two",
+        23: "twenty three",
+        24: "twenty four",
+        25: "twenty five",
+        26: "twenty six",
+        27: "twenty seven",
+        28: "twenty eight",
+        29: "twenty nine",
+      30: "half past",
+    }
+
+    hour = numbers_to_word.get(h, "") 
+    minutes = ""
+
+    if m == 00:
+        minutes = " o' clock"
+        return hour + minutes
+    elif 1 <= m <= 30:
+        minutes = "past "
+        minn = numbers_to_word.get(m, "")
+        if m == 15:
+            return minn + " " + minutes + hour
+        else:
+            return minn + " minutes " + minutes + hour
+        #   minutes += numbers_to_word[int(m // 10) * 10] + " " + numbers_to_word[m % 10]
+    else:
+        minutes = " to "
+        remaining_minutes = 60 - m
+        minn = numbers_to_word.get(remaining_minutes, "")
+        hr = h + 1
+        hour = numbers_to_word.get(hr, "")
+        return minn + ' minutes' + minutes + (hour)
+        # minutes += numbers_to_word[int(remaining_minutes // 10) * 10] + " " + numbers_to_word[remaining_minutes % 10]
